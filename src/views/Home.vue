@@ -1,18 +1,36 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<div>
+    <div>
+      <h1>
+        {{$store.state.auth.userInfo}}
+      </h1>
+      <article>
+        {{users}}
+      </article>
+      <button @click="test">read</button>
+    </div>
+</div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import { computed } from '@vue/runtime-core'
+import { useStore } from 'vuex'
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  setup() {
+    const store = useStore()
+
+    const posts = computed(() => store.getters['loadPosts/posts'])
+    const users = computed(() => store.getters['loadUsers/users'])
+
+    return {
+      posts,
+      users
+    }
   }
+
 }
 </script>
+
+<style>
+
+</style>
