@@ -5,6 +5,7 @@
       <h2>{{new Date(post.time).toLocaleDateString()}}</h2>
     </div>
     <div>
+      <h4>Author: {{post.authorId}}</h4>
       Description: {{post.description}}
     </div>
     <div v-if="isOpen">
@@ -25,6 +26,7 @@ export default {
     const isOpen = ref(false)
 
     const open = () => isOpen.value = !isOpen.value
+
 
     return {
       isOpen,
