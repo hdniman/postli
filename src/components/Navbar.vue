@@ -33,6 +33,7 @@ export default {
     const userId = computed(() => store.getters['auth/userId'])
 
     const goProfile = () => {
+      console.log(userId.value)
       if (userId.value) {
         router.push(`/user/${userId.value}`)
       } else {

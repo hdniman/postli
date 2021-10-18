@@ -9,16 +9,16 @@ export function usePostForm() {
   const store = useStore()
   const router = useRouter()
   const {handleSubmit, isSubmitting} = useForm()
-  const {value: name, errorMessage: nError, handleBlur: nBlur} = useField(
-    'name',
+  const {value: title, errorMessage: tError, handleBlur: tBlur} = useField(
+    'title',
     yup
     .string()
     .trim()
-    .required('Enter name')
-    .min(4, 'Min lingth is 4')
+    .required('Enter title')
+    .min(3, 'Min lingth is 3')
   )
-  const {value: article, errorMessage: aError, handleBlur: aBlur} = useField(
-    'article',
+  const {value: articleBody, errorMessage: aError, handleBlur: aBlur} = useField(
+    'articleBody',
     yup
     .string()
     .trim()
@@ -28,17 +28,15 @@ export function usePostForm() {
 
   const onSubmit = handleSubmit(async(values) => {
     await store.dispatch('createPost/createPost', values)
-    name.value = ''
-    article.value = ''
     router.push('/')
   })
 
 
   return {
-    name,
-    nError,
-    nBlur,
-    article,
+    title,
+    tError,
+    tBlur,
+    articleBody,
     aError,
     aBlur,
     onSubmit,

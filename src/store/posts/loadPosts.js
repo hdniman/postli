@@ -9,18 +9,27 @@ export default {
     }
   },
   mutations:{
+    loadPosts(state, payload) {
+      state.posts = payload
+    }
   },
   actions: {
-    async loadPosts() {
+    async loadPosts({commit}) {
       const url = `${process.env.VUE_APP_BASE_URL}/postli/posts.json`
       const response = await axios.get(url)
       const postsData = response.data
       const request = Object.keys(postsData).map(key => {
         return {
           postId: key,
-          name: postsData[key].name
+          author: postsData[key].author,
+          title: postsData[key].title,
+          articleBody: postsData[key].articleBody,
+          time: postsData[key].time,
+          likes: postsData[key].likes,
+          dislikes: postsData[key].dislikes
         }
       })
+      commit('loadPosts', request)
     }
   },
   getters: {

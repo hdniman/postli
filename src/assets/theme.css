@@ -124,6 +124,7 @@ input:focus {
 
 textarea {
   min-width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
   border: 2px solid #ccc;
   outline: none;
@@ -152,8 +153,4 @@ label {
   height: 150px;
   object-fit: cover;
   border-radius: 50%;
-}
-
-.inline {
-  display: flex;
 }

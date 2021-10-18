@@ -7,17 +7,17 @@
       </div>
       <div class="test">
         <div class="form-control">
-          <input id="name" type="text" v-model="name" @blur="nBlur" />
+          <input id="name" type="text" v-model="title" @blur="tBlur" />
         </div>
       </div>
-      <small class="error" v-if="nError">
-        {{nError}}
+      <small class="error" v-if="tError">
+        {{tError}}
       </small>
     </div>
     <div class="card">
       <div class="form-control">
         <label for="article">Article</label>
-        <textarea id="article" v-model="article" @blur="aBlur"></textarea>
+        <textarea id="article" v-model="articleBody" @blur="aBlur"></textarea>
       </div>
       <small class="error" v-if="aError">{{aError}}</small>
     </div>

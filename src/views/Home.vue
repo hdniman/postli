@@ -9,6 +9,7 @@
       </article>
       <button @click="test">read</button>
     </div>
+        {{$store.state.loadPosts.posts}}
 </div>
 </template>
 

@@ -16,17 +16,17 @@ export default {
       await dispatch('createUser', { //create fb database info
         email: response.data.email,
         localId: response.data.localId,
-        name: `user-${Math.round(100000*Math.random())}`,
+        nickname: `user-${Math.round(100000*Math.random())}`,
         about: '',
         photo: '',
-        posts: ''
+        posted: []
       })
     },
     async createUser({commit},payload) {
       const token = store.getters['auth/token']
       const url = `${process.env.VUE_APP_BASE_URL}/postli/users.json?auth=${token}`
       const response = await axios.post(url, payload)
-      store.commit('loadUsers/addUser', {...payload, ...response.data})
+      store.commit('loadUsers/addUser', {...payload, userId : response.data.name})
       store.commit('auth/getUserInfo')
       
     }

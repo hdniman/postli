@@ -26,7 +26,7 @@ export default {
           userId: key,
           localId: usersData[key].localId,
           email: usersData[key].email,
-          name: usersData[key].name,
+          nickname: usersData[key].nickname,
           photo: usersData[key].photo,
           about: usersData[key].about,
           posts: usersData[key].posts,
