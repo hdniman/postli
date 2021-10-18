@@ -17,18 +17,20 @@ export default {
       const url = `${process.env.VUE_APP_BASE_URL}/postli/posts.json?auth=${token}`
       console.log('test',payload.articleBody)
       const response = await axios.post(url, {
-        author: user,
+        authorId: user,
         title: payload.title,
+        description: payload.description,
         articleBody: payload.articleBody,
         time: Date.now(),
         likes: [],
         dislikes: []
       })
-      dispatch('addToAuthor', {posted: response.data.name, user, token})
+      dispatch('addToAuthor', {postsId: response.data.name, user, token})
     },
     async addToAuthor(_,payload) {
-      const url = `${process.env.VUE_APP_BASE_URL}/postli/users/${payload.user}/posted.json?auth=${payload.token}`
-      const response = await axios.patch(url, {[payload.posted]: ''})
+      console.log('payload', payload)
+      const url = `${process.env.VUE_APP_BASE_URL}/postli/users/${payload.user}/postsId.json?auth=${payload.token}`
+      const response = await axios.patch(url, {[payload.postsId]: ''})
     }
   },
   getters: {

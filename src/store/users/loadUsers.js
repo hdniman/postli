@@ -11,6 +11,7 @@ export default {
   mutations:{
     loadUsers(state, payload) {
       state.users = payload
+      console.log('users loaded')
     },
     addUser(state, payload) {
       state.users.push(payload)
@@ -32,7 +33,7 @@ export default {
           posts: usersData[key].posts,
         }
       })
-      commit('loadUsers', request)
+      await commit('loadUsers', request)
     }
   },
   getters: {

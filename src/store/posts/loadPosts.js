@@ -11,6 +11,7 @@ export default {
   mutations:{
     loadPosts(state, payload) {
       state.posts = payload
+      console.log('posts loaded')
     }
   },
   actions: {
@@ -21,8 +22,9 @@ export default {
       const request = Object.keys(postsData).map(key => {
         return {
           postId: key,
-          author: postsData[key].author,
+          authorId: postsData[key].authorId,
           title: postsData[key].title,
+          description: postsData[key].description,
           articleBody: postsData[key].articleBody,
           time: postsData[key].time,
           likes: postsData[key].likes,
@@ -33,5 +35,8 @@ export default {
     }
   },
   getters: {
+    posts(state) {
+      return state.posts
+    }
   }
 }

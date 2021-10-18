@@ -17,6 +17,14 @@ export function usePostForm() {
     .required('Enter title')
     .min(3, 'Min lingth is 3')
   )
+  const {value: description, errorMessage: dError, handleBlur: dBlur} = useField(
+    'description',
+    yup
+    .string()
+    .trim()
+    .required('Enter name')
+    .min(3, 'Min lingth is 3')
+  )
   const {value: articleBody, errorMessage: aError, handleBlur: aBlur} = useField(
     'articleBody',
     yup
@@ -36,6 +44,9 @@ export function usePostForm() {
     title,
     tError,
     tBlur,
+    description,
+    dError,
+    dBlur,
     articleBody,
     aError,
     aBlur,

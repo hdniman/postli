@@ -8,8 +8,8 @@
 
 <script>
 import { ref } from '@vue/reactivity';
-import LogIn from "../components/Auth/LogIn.vue";
-import SignUp from "../components/Auth/SignUp.vue";
+import LogIn from "../components/auth/LogIn.vue";
+import SignUp from "../components/auth/SignUp.vue";
 export default {
   setup() {
     const newUser = ref(false)

@@ -2,17 +2,27 @@
   <form @submit.prevent="onSubmit">
     <div class="card">
       <div class="split">
-        <h1>Confirm</h1>
+        <h2>Confirm</h2>
         <button class="btn">Create</button>
       </div>
-      <div class="test">
+      <div>
         <div class="form-control">
-          <input id="name" type="text" v-model="title" @blur="tBlur" />
+        <label for="title">Title: </label>
+          <input id="title" type="text" v-model="title" @blur="tBlur" />
         </div>
+        <small class="error" v-if="tError">
+          {{tError}}
+        </small>
       </div>
-      <small class="error" v-if="tError">
-        {{tError}}
-      </small>
+      <div>
+        <div class="form-control">
+          <label for="description">Description: </label>
+          <input id="description" type="text" v-model="description" @blur="dBlur" />
+        </div>
+        <small class="error" v-if="dError">
+          {{dError}}
+        </small>
+      </div>
     </div>
     <div class="card">
       <div class="form-control">

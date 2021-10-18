@@ -25,8 +25,9 @@ export default {
       state.userData = {}
       localStorage.removeItem('localId')
     },
-    getUserInfo(state) {
+    getUserData(state) {
       state.userData = getUserData(state.localId)
+      console.log('got user info')
     }
   },
   actions: {
@@ -34,7 +35,7 @@ export default {
       const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_FB_KEY}`
       const response = await axios.post(url, {...payload, returnSecureToken: true})
       commit('login', response.data)
-      commit('getUserInfo')
+      commit('getUserData')
     }
   },
   getters: {
