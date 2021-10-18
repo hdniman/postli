@@ -5,14 +5,16 @@ export default {
   namespaced: true,
   state() {
     return {
-      users: {}
+      users: []
     }
   },
   mutations:{
     loadUsers(state, payload) {
       state.users = payload
-      console.log(state.users)
     },
+    addUser(state, payload) {
+      state.users.push(payload)
+    }
   },
   actions: {
     async loadUsers({commit}) {
@@ -27,9 +29,9 @@ export default {
           name: usersData[key].name,
           photo: usersData[key].photo,
           about: usersData[key].about,
+          posts: usersData[key].posts,
         }
       })
-      console.log('users request', request)
       commit('loadUsers', request)
     }
   },

@@ -1,5 +1,6 @@
 import axios from "axios"
 import store from ".."
+import { getUserData } from "../../use/getUserData"
 
 
 export default {
@@ -8,7 +9,7 @@ export default {
     return {
       jwtToken: localStorage.getItem('jwtToken'),
       localId: localStorage.getItem('localId'),
-      userInfo: {}
+      userData: {}
     }
   },
   mutations: {
@@ -21,11 +22,11 @@ export default {
     logout(state) {
       state.jwtToken = ''
       localStorage.removeItem('jwtToken')
+      state.userData = {}
       localStorage.removeItem('localId')
     },
     getUserInfo(state) {
-      const users = store.getters['loadUsers/users']
-      state.userInfo = users.find(el => el.localId == state.localId)
+      state.userData = getUserData(state.localId)
     }
   },
   actions: {
@@ -33,7 +34,6 @@ export default {
       const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_FB_KEY}`
       const response = await axios.post(url, {...payload, returnSecureToken: true})
       commit('login', response.data)
-      console.log(response)
       commit('getUserInfo')
     }
   },
@@ -43,6 +43,12 @@ export default {
     },
     isAuthenticated(state) {
       return !!state.jwtToken
+    },
+    userData(state) {
+      return state.userData
+    },
+    userId(state) {
+      return state.userData.userId
     }
   }
 }

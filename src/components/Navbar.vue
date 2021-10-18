@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-      <img src="../assets/images/postli.svg" alt="">
+      <img class="logo" src="../assets/images/postli.svg" alt="">
     <div class="navbar-menu">
       <router-link to="/create">
         create
@@ -11,7 +11,7 @@
       <router-link to="/">
         main
       </router-link>
-      <a href="#">
+      <a @click="goProfile">
         profile
       </a>
       <a @click="login">
@@ -30,6 +30,16 @@ export default {
     const store = useStore()
     const router = useRouter()
 
+    const userId = computed(() => store.getters['auth/userId'])
+
+    const goProfile = () => {
+      if (userId.value) {
+        router.push(`/user/${userId.value}`)
+      } else {
+        router.push('/auth')
+      }
+    }
+
     const login = () => {
       if (store.getters['auth/isAuthenticated']) {
         store.commit('auth/logout')
@@ -41,7 +51,8 @@ export default {
     const isAuthenticated = computed(() => store.getters['auth/isAuthenticated'])
     return {
       isAuthenticated,
-      login
+      login,
+      goProfile
     }
   }
 
