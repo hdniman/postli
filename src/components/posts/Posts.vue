@@ -5,7 +5,6 @@
   :key="post.postId"
   :post="post">>
   </post>
-  
 </template>
 
 <script>
