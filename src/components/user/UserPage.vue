@@ -40,10 +40,7 @@ export default {
       postsId: []
     })
     
-    const refresh = () => {
-    console.log('refeshing')
-    userData.value = getUserData(route.params.userId, 'userId')
-    console.log('refreshed')}
+    const refresh = () => {userData.value = getUserData(route.params.userId, 'userId')}
 
     refresh()
     

@@ -1,11 +1,11 @@
 <template>
-  <posts>
+  <post-list>
 
-  </posts>
+  </post-list>
 </template>
 
 <script>
-import Posts from "../components/posts/Posts.vue";
+import PostList from "../components/home/PostList.vue";
 export default {
   setup() {
     return {
@@ -13,7 +13,7 @@ export default {
     }
   },
   components: {
-    Posts
+    PostList
   }
 
 }

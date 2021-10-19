@@ -1,11 +1,14 @@
 <template>
-  <div class="card">
-    <h1>this is post</h1>
-  </div>
+<post-page></post-page>
 </template>
 
 <script>
+import PostPage from "../components/post/PostPage.vue";
 export default {
+
+  components: {
+    PostPage
+  }
 
 }
 </script>

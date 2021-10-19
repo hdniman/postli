@@ -13,7 +13,7 @@ const routes = [
     component: () => import('../views/CreatePost.vue')
   },
   {
-    path: '/post/:article',
+    path: '/post/:postId',
     name: 'Post',
     component: () => import('../views/Post.vue'),
     props: true
