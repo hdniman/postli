@@ -11,7 +11,7 @@ export default {
     const store = useStore()
 
     const loadData = async() => {
-      store.dispatch('loadPosts/loadPosts')
+      await store.dispatch('loadPosts/loadPosts')
       await store.dispatch('loadUsers/loadUsers')
       store.commit('auth/getUserData')
     }

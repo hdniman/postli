@@ -55,6 +55,13 @@ button:hover {
   opacity: 0.7;
 }
 
+button:disabled{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  opacity: 1;
+}
+
 .card {
   margin: 20px auto;
   width: 100%;
@@ -67,6 +74,7 @@ button:hover {
 }
 
 .split {
+  width: 100%;
   display: flex;
   justify-content: space-between;
 }

@@ -4,6 +4,7 @@ import loadPosts from "./posts/loadPosts";
 import auth from "./users/auth";
 import createUser from "./users/createUser";
 import loadUsers from "./users/loadUsers";
+import changeUser from "./users/changeUser";
 
 export default createStore({
   state() {
@@ -22,6 +23,7 @@ export default createStore({
     createPost,
     auth,
     createUser,
-    loadUsers
+    loadUsers,
+    changeUser
   }
 })
