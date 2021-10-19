@@ -29,13 +29,13 @@ export default {
   setup() {
     const store = useStore()
     const router = useRouter()
+    
 
-    const userId = computed(() => store.getters['auth/userId'])
 
     const goProfile = () => {
-      console.log(userId.value)
-      if (userId.value) {
-        router.push(`/user/${userId.value}`)
+      const userId = store.getters['auth/userId']
+      if (userId) {
+        router.push(`/user/${userId}`)
       } else {
         router.push('/auth')
       }

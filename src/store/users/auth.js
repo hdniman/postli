@@ -31,11 +31,14 @@ export default {
     }
   },
   actions: {
-    async login({commit}, payload) {
+    async login({state, commit}, payload) {
       const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.VUE_APP_FB_KEY}`
       const response = await axios.post(url, {...payload, returnSecureToken: true})
       commit('login', response.data)
+      console.log('userData', state.userData)
+      console.log('localId', state.localId)
       commit('getUserData')
+      console.log('userData', state.userData)
     }
   },
   getters: {
@@ -49,7 +52,7 @@ export default {
       return state.userData
     },
     userId(state) {
-      return state.userData.userId
+      return state.userData ? state.userData.userId : null
     }
   }
 }
