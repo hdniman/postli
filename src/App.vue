@@ -9,8 +9,9 @@
 <script>
 import Navbar from "./components/Navbar.vue";
 import { useStore } from 'vuex';
+import { onMounted } from '@vue/runtime-core';
 export default {
-  setup() {
+  async setup() {
     const store = useStore()
 
     const loadData = async() => {
@@ -18,8 +19,10 @@ export default {
       await store.dispatch('loadUsers/loadUsers')
       store.commit('auth/getUserData')
     }
-    
+
     loadData()
+
+    await onMounted(() => {console.log('mounted')})
     
   },
   components: {

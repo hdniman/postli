@@ -8,16 +8,16 @@
         <h1>Dislikes: </h1>
       </div>
     </div>
-    <div v-if="userDate.about">
+    <div>
       <h1>About</h1>
       <article>
         {{userDate.about}}
       </article>
     </div>
-    <div v-if="userDate.posts">
+    <div>
       <h1>Posts</h1>
       <ul>
-        <li v-for="post in userDate.posts" :key="post">
+        <li v-for="post in Object.keys(userDate.postsId)" :key="post">
           {{post}}
         </li>
       </ul>

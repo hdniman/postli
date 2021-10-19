@@ -19,7 +19,7 @@ export default {
         nickname: `user-${Math.round(100000*Math.random())}`,
         about: '',
         photo: '',
-        posted: []
+        postsId: []
       })
     },
     async createUser({commit},payload) {

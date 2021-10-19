@@ -30,7 +30,7 @@ export default {
           nickname: usersData[key].nickname,
           photo: usersData[key].photo,
           about: usersData[key].about,
-          posts: usersData[key].posts,
+          postsId: usersData[key].postsId,
         }
       })
       await commit('loadUsers', request)
