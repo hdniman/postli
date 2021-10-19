@@ -6,7 +6,7 @@
     </div>
     <div>
       <h4>Author: 
-        <router-link class="user-url" :to="`/user/${post.authorId}`">
+        <router-link class="user-url" :to="isOpen ? `/user/${post.authorId}` : '/'">
           {{authorNickname ? authorNickname : ''}}
         </router-link>
       </h4>
@@ -24,7 +24,6 @@
 <script>
 import { ref } from '@vue/reactivity'
 import { getUserData } from '../../use/getUserData'
-import { onMounted, onUpdated } from '@vue/runtime-core'
 export default {
   props: ['post'],
   setup(props) {
@@ -33,9 +32,7 @@ export default {
 
     const open = () => isOpen.value = !isOpen.value
 
-    const authorNickname = ref('')
-    
-    onUpdated(() => {authorNickname.value = getUserData(props.post.authorId, 'userId').nickname})
+    const authorNickname = getUserData(props.post.authorId, 'userId').nickname
     
 
     return {
