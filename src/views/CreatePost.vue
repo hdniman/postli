@@ -3,7 +3,7 @@
     <div class="card">
       <div class="split">
         <h2>Confirm</h2>
-        <button class="btn">Create</button>
+        <button class="btn" :disabled="!userId">Create</button>
       </div>
       <div>
         <div class="form-control">
@@ -35,12 +35,19 @@
 </template>
 
 <script>
+import { computed } from '@vue/reactivity';
+import { useStore } from 'vuex';
   import { usePostForm } from "../use/post-form";
   export default {
     setup() {
+      const store = useStore()
+
+      const userId = computed(() => store.getters['auth/userId'])
+      
 
       return {
-        ...usePostForm()
+        ...usePostForm(),
+        userId
       }
     }
 

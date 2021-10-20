@@ -12,6 +12,8 @@
     </div>
     <h3>{{postData.description}}</h3>
     <p>{{postData.articleBody}}</p>
+    <button>Like</button>
+    <button>Dislike</button>
   </div>
 </template>
 
