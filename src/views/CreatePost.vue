@@ -37,7 +37,7 @@
 <script>
 import { computed } from '@vue/reactivity';
 import { useStore } from 'vuex';
-  import { usePostForm } from "../use/post-form";
+  import { usePostForm } from "../use/forms/post-form";
   export default {
     setup() {
       const store = useStore()

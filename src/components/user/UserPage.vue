@@ -15,7 +15,7 @@
         {{userData.about}}
       </article>
     </div>
-    <div>
+    <div v-if="userData.postId">
       <h1>Posts:</h1>
         <user-post v-for="userPostId in Object.keys(userData.postsId)" :key="userPostId" :userPostId="userPostId">
         </user-post>
@@ -26,7 +26,7 @@
 <script>
 import UserPost from "./UserPost.vue";
 import { useRoute } from 'vue-router'
-import { getUserData } from "../../use/getUserData";
+import { getUserData } from "../../use/getData";
 import { computed, ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
 export default {
@@ -37,7 +37,7 @@ export default {
       nickname: '',
       photo: '',
       about: '',
-      postsId: []
+      postsId: {}
     })
     
     const refresh = () => {userData.value = getUserData(route.params.userId, 'userId')}

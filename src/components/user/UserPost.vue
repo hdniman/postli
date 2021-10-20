@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { getPostData } from "../../use/getPostData";
+import { getPostData } from "../../use/getData";
 export default {
   props: ['userPostId'],
   setup(props) {

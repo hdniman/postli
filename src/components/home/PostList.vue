@@ -15,7 +15,7 @@ export default {
   setup() {
     const store = useStore()
 
-    const posts = computed(() => store.getters['loadPosts/posts'])
+    const posts = computed(() => store.getters['posts/posts'])
 
     return{
       posts

@@ -35,7 +35,7 @@ export function usePostForm() {
   )
 
   const onSubmit = handleSubmit(async(values) => {
-    await store.dispatch('createPost/createPost', values)
+    await store.dispatch('posts/createPost', values)
     router.push('/')
   })
 

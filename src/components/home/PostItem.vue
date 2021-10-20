@@ -23,7 +23,7 @@
 
 <script>
 import { ref } from '@vue/reactivity'
-import { getUserData } from '../../use/getUserData'
+import { getUserData } from '../../use/getData'
 export default {
   props: ['post'],
   setup(props) {

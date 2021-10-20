@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { useSignUpForm } from "../../use/signup-form";
+import { useSignUpForm } from "../../use/forms/signup-form";
 export default {
   setup() {
 

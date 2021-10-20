@@ -29,7 +29,7 @@ export function useChangeUserForm() {
 
   const onSubmit = handleSubmit(values => {
     console.log(values)
-    store.dispatch('changeUser/changeUser', values)
+    store.dispatch('users/changeUser', values)
   })
 
   return {

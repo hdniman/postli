@@ -28,7 +28,7 @@ export function useSignUpForm() {
   
 
   const onSubmit = handleSubmit(async(values) => {
-    await store.dispatch('createUser/signUp', values) //create user
+    await store.dispatch('users/signUp', values) //create user
     router.push('/') //push main
   })
 

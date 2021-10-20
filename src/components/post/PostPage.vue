@@ -20,8 +20,8 @@
 <script>
 import { ref } from '@vue/reactivity'
 import { useRoute } from 'vue-router'
-import { getPostData } from '../../use/getPostData'
-import { getUserData } from '../../use/getUserData'
+import { getPostData } from '../../use/getData'
+import { getUserData } from '../../use/getData'
 export default {
   setup() {
     const route = useRoute()

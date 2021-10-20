@@ -1,6 +1,5 @@
 import axios from "axios"
-import store from ".."
-import { getUserData } from "../../use/getUserData"
+import { getUserData } from "../../use/getData"
 
 
 export default {

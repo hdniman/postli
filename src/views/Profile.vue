@@ -21,7 +21,7 @@
 <script>
 import { computed, ref } from '@vue/reactivity'
 import { useStore } from 'vuex'
-import { useChangeUserForm } from "../use/changeUser-form";
+import { useChangeUserForm } from "../use/forms/changeUser-form";
 export default {
   setup() {
     const store = useStore()
