@@ -1,13 +1,16 @@
 <template>
   <div class="card">
     <div class="split">
-    <h1>{{postData.title}}</h1>
-    <router-link to="/">back</router-link>
+      <router-link class="user-url" :to="`/user/${postData.authorId}`">
+        {{authorNickname ? authorNickname : ''}}
+      </router-link>
+      <router-link to="/">back</router-link>
     </div>
     <div class="split">
-    <h2>{{postData.description}}</h2>
-    <h2>{{new Date(postData.time).toLocaleDateString()}}</h2>
+      <h2>{{postData.title}}</h2>
+      <h2>{{new Date(postData.time).toLocaleDateString()}}</h2>
     </div>
+    <h3>{{postData.description}}</h3>
     <p>{{postData.articleBody}}</p>
   </div>
 </template>
@@ -16,6 +19,7 @@
 import { ref } from '@vue/reactivity'
 import { useRoute } from 'vue-router'
 import { getPostData } from '../../use/getPostData'
+import { getUserData } from '../../use/getUserData'
 export default {
   setup() {
     const route = useRoute()
@@ -30,9 +34,12 @@ export default {
       dislikes: []
     })
     postData.value = getPostData(route.params.postId)
+
+    const authorNickname = getUserData(postData.value.authorId, 'userId').nickname
     
     return {
-      postData
+      postData,
+      authorNickname
     }
   }
 
@@ -40,5 +47,11 @@ export default {
 </script>
 
 <style>
+
+.user-url {
+  color: black;
+  font-style: italic;
+  font-weight: 700;
+}
 
 </style>
