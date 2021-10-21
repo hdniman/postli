@@ -35,6 +35,8 @@ export function usePostForm() {
   )
 
   const onSubmit = handleSubmit(async(values) => {
+    values.time = Date.now()
+    values.authorId = store.getters['auth/userData'].userId
     await store.dispatch('posts/createPost', values)
     router.push('/')
   })

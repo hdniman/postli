@@ -5,13 +5,17 @@ export default {
   namespaced: true,
   state() {
     return {
-      postsData: {}
+      posts: []
     }
   },
   mutations:{
     loadPosts(state, payload) {
       state.posts = payload
       console.log('posts loaded')
+    },
+    addPost(state, payload) {
+      console.log(payload)
+      state.posts.push(payload)
     }
   },
   actions: {
@@ -27,32 +31,32 @@ export default {
           description: postsData[key].description,
           articleBody: postsData[key].articleBody,
           time: postsData[key].time,
-          likes: postsData[key].likes,
-          dislikes: postsData[key].dislikes
+          rating: postsData[key].rating
         }
       })
       commit('loadPosts', request)
     },
     async createPost({commit, dispatch}, payload) {
       const token = store.getters['auth/token']
-      const user = store.getters['auth/userData'].userId
       const url = `${process.env.VUE_APP_BASE_URL}/postli/posts.json?auth=${token}`
       console.log('test',payload.articleBody)
       const response = await axios.post(url, {
-        authorId: user,
+        authorId: payload.authorId,
         title: payload.title,
         description: payload.description,
         articleBody: payload.articleBody,
-        time: Date.now(),
-        likes: [],
-        dislikes: []
+        time: payload.time
       })
-      dispatch('addToAuthor', {postsId: response.data.name, user, token})
+      payload.postId = response.data.name
+      dispatch('addToAuthor', {...payload, token})
+
+      commit('addPost', payload)
+
+
     },
     async addToAuthor(_,payload) {
-      console.log('payload', payload)
-      const url = `${process.env.VUE_APP_BASE_URL}/postli/users/${payload.user}/postsId.json?auth=${payload.token}`
-      const response = await axios.patch(url, {[payload.postsId]: ''})
+      const url = `${process.env.VUE_APP_BASE_URL}/postli/users/${payload.authorId}/postsId.json?auth=${payload.token}`
+      const response = await axios.patch(url, {[payload.postId] : ''})
     }
   },
   getters: {

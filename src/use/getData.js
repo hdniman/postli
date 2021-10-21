@@ -10,8 +10,8 @@ export function getUserData (id, param = 'localId') { //param userId or localId(
   const users = store.getters['users/users']
   if (param == 'localId') {
     return users.find(el => el.localId == id)
-  } else {
+  } else if (param == 'userId') {
     return users.find(el => el.userId == id)
-  } 
+  }
 }
 

@@ -6,11 +6,16 @@
     </div>
     <div>
       <h4>Author: 
-        <router-link class="user-url" :to="isOpen ? `/user/${post.authorId}` : '/'">
-          {{authorNickname ? authorNickname : ''}}
+        <router-link v-if="authorNickname" class="user-url" :to="isOpen ? `/user/${post.authorId}` : '/'">
+          {{authorNickname}}
         </router-link>
+        <template v-else>
+          not-found
+        </template>
       </h4>
-      Description: {{post.description}}
+      <div v-if="post.description">
+        Description: {{post.description}}
+      </div>
     </div>
     <div v-if="isOpen">
       <p>
@@ -33,6 +38,7 @@ export default {
     const open = () => isOpen.value = !isOpen.value
 
     const authorNickname = getUserData(props.post.authorId, 'userId').nickname
+    
     
 
     return {

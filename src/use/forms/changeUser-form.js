@@ -18,13 +18,11 @@ export function useChangeUserForm() {
   const {value: photo, errorMessage: pError, handleBlur: pBlur} = useField('photo',
   yup
   .string()
-  .required()
   )
 
   const {value: about, errorMessage: aError, handleBlur: aBlur} = useField('about',
   yup
   .string()
-  .required()
   )
 
   const onSubmit = handleSubmit(values => {

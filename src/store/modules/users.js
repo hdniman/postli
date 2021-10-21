@@ -15,6 +15,13 @@ export default {
     },
     addUser(state, payload) {
       state.users.push(payload)
+    },
+    changeUser(state, payload) {
+      const idx = state.users.findIndex(el => el.userId == payload.userId)
+      state.users[idx].nickname = payload.nickname
+      state.users[idx].about = payload.about
+      state.users[idx].photo = payload.photo
+      
     }
   },
   actions: {
@@ -62,9 +69,10 @@ export default {
       const token = store.getters['auth/token']
       const userId = store.getters['auth/userId']
       const url = `${process.env.VUE_APP_BASE_URL}/postli/users/${userId}.json?auth=${token}`
-      console.log(url)
-      const response = axios.patch(url, payload)
-      console.log(response)
+      const response = await axios.patch(url, payload)
+      payload.userId = userId
+
+      commit('changeUser', payload)
     }
   },
   getters: {
