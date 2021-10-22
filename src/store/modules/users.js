@@ -38,6 +38,7 @@ export default {
           photo: usersData[key].photo,
           about: usersData[key].about,
           postsId: usersData[key].postsId,
+          rating: usersData[key].rating,
         }
       })
       await commit('loadUsers', request)

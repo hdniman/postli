@@ -57,6 +57,24 @@ export default {
     async addToAuthor(_,payload) {
       const url = `${process.env.VUE_APP_BASE_URL}/postli/users/${payload.authorId}/postsId.json?auth=${payload.token}`
       const response = await axios.patch(url, {[payload.postId] : ''})
+    },
+
+    async ratePost(commit, payload) {
+      const token = store.getters['auth/token']
+      const setRating = [{
+        ratingHolder: `users/${store.getters['auth/userId']}/rating/${payload.rating}`,
+        source: payload.postId
+      },
+      {
+        ratingHolder: `posts/${payload.postId}/rating/${payload.rating}`,
+        source: payload.userId
+      }]
+      
+      console.log('bigData', setRating)
+      for(const el of setRating) {
+        const url = `${process.env.VUE_APP_BASE_URL}/postli/${el.ratingHolder}.json?auth=${token}`
+        const response = await axios.patch(url, {[el.source]: ''})
+      }
     }
   },
   getters: {
