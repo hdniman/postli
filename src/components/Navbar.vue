@@ -5,9 +5,9 @@
       <router-link to="/create">
         create
       </router-link>
-      <a href="#">
+      <router-link to="/likes">
         likes
-      </a>
+      </router-link>
       <router-link to="/">
         main
       </router-link>

@@ -45,10 +45,22 @@ button {
   position: relative;
 }
 
+button.primary {
+  color: #1a4761;
+  background-color: #5aa2cc;
+  border-color: #1a4761;
+}
+
 button.danger {
   color: #cf373e;
   background-color: #fff;
   border-color: #cf373e;
+}
+
+button.warning {
+  color: #da7531;
+  background-color: #fff;
+  border-color: #da7531;
 }
 
 button:hover {

@@ -15,3 +15,14 @@ export function getUserData (id, param = 'localId') { //param userId or localId(
   }
 }
 
+export function nestedProperty (object, path) {
+  for (const element of path.split('.')) {
+    if (object !== undefined && object.hasOwnProperty(element)) {
+      object = object[element]
+    } else {
+      return false
+    }
+  }
+  return true
+}
+

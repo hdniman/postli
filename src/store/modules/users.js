@@ -21,7 +21,28 @@ export default {
       state.users[idx].nickname = payload.nickname
       state.users[idx].about = payload.about
       state.users[idx].photo = payload.photo
-      
+    },
+    setRating(state, payload) {
+      const idx = state.users.findIndex(el => el.userId == payload.userId)
+      console.log(idx)
+      if (state.users[idx].rating == undefined) {
+        state.users[idx].rating = {}
+      }
+      if (state.users[idx].rating[payload.rating] == undefined) {
+        state.users[idx].rating[payload.rating] = {}
+      }
+      state.users[idx].rating[payload.rating][payload.postId] = ""
+    },
+    removeRating(state, payload) {
+      const idx = state.users.findIndex(el => el.userId == payload.userId)
+      console.log(idx)
+      if (state.users[idx].rating == undefined) {
+        state.users[idx].rating = {}
+      }
+      if (state.users[idx].rating[payload.rating] == undefined) {
+        state.users[idx].rating[payload.rating] = {}
+      }
+      delete state.users[idx].rating[payload.rating][payload.postId]
     }
   },
   actions: {
