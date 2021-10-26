@@ -186,3 +186,9 @@ label {
   object-fit: cover;
   border-radius: 50%;
 }
+
+.user-url {
+  color: #222222;
+  font-style: italic;
+  font-size: 1em;
+}

@@ -53,10 +53,4 @@ export default {
 
 <style scoped>
 
-.user-url {
-  color: black;
-  font-style: italic;
-  font-size: 1em;
-}
-
 </style>

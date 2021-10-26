@@ -1,7 +1,9 @@
 <template>
   <div class="card">
-    <div class="header">
+    <div v-if="canEdit" class="settingsButton">
       <router-link class="toSettings" to="/profile">Settings</router-link>
+    </div>
+    <div class="header">
       <img class="image" :src="userData.photo"/>
         <div>
           <h1>{{userData.nickname}}</h1>
@@ -15,7 +17,7 @@
         {{userData.about}}
       </article>
     </div>
-    <div v-if="userData.postId">
+    <div v-if="userData.postsId">
       <h1>Posts:</h1>
         <user-post v-for="userPostId in Object.keys(userData.postsId)" :key="userPostId" :userPostId="userPostId">
         </user-post>
@@ -29,6 +31,7 @@ import { useRoute } from 'vue-router'
 import { getUserData } from "../../use/getData";
 import { computed, ref } from '@vue/reactivity';
 import { watch } from '@vue/runtime-core';
+import { useStore } from 'vuex';
 export default {
   setup() {
     const route = useRoute()
@@ -39,23 +42,35 @@ export default {
       about: '',
       postsId: {}
     })
+
+    const userId = computed(() => route.params.userId)
     
-    const refresh = () => {userData.value = getUserData(route.params.userId, 'userId')}
+    const refresh = () => {userData.value = getUserData(userId.value, 'userId')}
 
     refresh()
     
     const userRoute = computed(() => route.params)
-
-    console.log()
     
 
-    watch(userRoute, (n) => {
-      if (n.userId) {
+    watch(userRoute, ( to) => {
+      if (to.userId) {
       refresh()
       }})
 
+    const store = useStore()
+    const authId = ref(store.getters['auth/userId'])
+
+    const canEdit = computed(() => {
+      if (authId.value == userId.value) {
+        return true
+      } else {
+        return false
+      }
+    })
+
     return {
-      userData
+      userData,
+      canEdit
     }
   },
   components: {
@@ -72,13 +87,12 @@ export default {
   position: relative;
 }
 
-h1, h2 {
-  margin: 10px 15px;
+.settingsButton {
+  float: right;
 }
 
-.toSettings {
-  position: absolute;
-  left: 90%;
+h1, h2 {
+  margin: 10px 15px;
 }
 
 </style>

@@ -1,4 +1,5 @@
 <template>
+{{myData}}
   <form class="card" @submit.prevent="changeUser.onSubmit">
     <h1>Personal info</h1>
     <img class="image" :src="myData.photo">
@@ -26,7 +27,8 @@ export default {
   setup() {
     const store = useStore()
 
-    const myData = ref({...store.getters['auth/userData']})
+    const myData = computed(() => {return store.getters['auth/userData']})
+    console.log(myData)
     
     const changeUser = ref({...useChangeUserForm()})
 

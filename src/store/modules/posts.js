@@ -1,5 +1,6 @@
 import axios from "axios"
 import store from ".."
+import "../../axios/request.js";
 
 export default {
   namespaced: true,

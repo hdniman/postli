@@ -4,7 +4,7 @@
       <router-link class="user-url" :to="`/user/${postData.authorId}`">
         {{authorNickname}}
       </router-link>
-      <router-link to="/">back</router-link>
+      <a @click="back">back</a>
     </div>
     <div class="split">
       <h2>{{postData.title}}</h2>
@@ -27,13 +27,16 @@
 
 <script>
 import { computed, ref } from '@vue/reactivity'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { getPostData, getUserData } from '../../use/getData'
 import { useStore } from 'vuex'
 export default {
   setup() {
+    const router = useRouter()
     const route = useRoute()
     const store = useStore()
+
+    const auth = computed(() => store.getters['auth/isAuthenticated'])
 
     const postData = ref(getPostData(route.params.postId))
 
@@ -50,8 +53,6 @@ export default {
 
     const userId = computed(() => store.getters['auth/userId'])
 
-    console.log('testtest', postData.value.rating.likes)
-
     const userRating = computed(() => {
       if (Object.keys(postData.value.rating.likes).find(el => el == userId.value)) {
         return 'likes'
@@ -61,30 +62,33 @@ export default {
     })
 
     const ratePost = (rating) => {
-      console.log('rating', rating)
-      console.log('userRating.value', userRating.value)
-      if (userRating.value == undefined) {
-      console.log('1st case')
-        store.dispatch('posts/setRating', {rating, postId: postData.value.postId, userId: userId.value})        
-      } else if (userRating.value == rating){
-      console.log('2st case', rating)
-        store.dispatch('posts/deleteRating', {rating, postId: postData.value.postId, userId: userId.value})
-      } else if (userRating.value !== rating)   {
-      console.log('3st case', rating)
-        store.dispatch('posts/deleteRating', {rating: userRating.value, postId: postData.value.postId, userId: userId.value}) 
-        store.dispatch('posts/setRating', {rating, postId: postData.value.postId, userId: userId.value})
+      console.log('auth',auth)
+      if (auth.value) {
+        console.log('rated')
+        if (userRating.value == undefined) {
+          store.dispatch('posts/setRating', {rating, postId: postData.value.postId, userId: userId.value})        
+        } else if (userRating.value == rating){
+          store.dispatch('posts/deleteRating', {rating, postId: postData.value.postId, userId: userId.value})
+        } else if (userRating.value !== rating)   {
+          store.dispatch('posts/deleteRating', {rating: userRating.value, postId: postData.value.postId, userId: userId.value}) 
+          store.dispatch('posts/setRating', {rating, postId: postData.value.postId, userId: userId.value})
+        }
+      } else {
+        console.log('go auth')
+        router.push('/auth')
       }
-      
     }
-
-    console.log(store.getters['posts/posts'])
+    
+    const back = () => {router.go(-1)}
     
     return {
       postData,
-      authorNickname: userData.nickname,
+      authorNickname: userData.value.nickname,
       ratePost,
       userRating,
-      userData
+      userData,
+      auth,
+      back
     }
   }
 
@@ -97,12 +101,6 @@ export default {
   color: #721b20;
   background-color: #cf373e;
   border-color: #721b20;
-}
-
-.user-url {
-  color: black;
-  font-style: italic;
-  font-weight: 700;
 }
 
 </style>
