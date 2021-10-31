@@ -15,12 +15,12 @@
     <button
     :class="userRating == 'likes' && userRating !== 'dislikes' ? 'primary' : ''"
     @click="ratePost('likes')">
-    Like: {{Object.keys(postData.rating.likes).length}}
+      Like: {{Object.keys(postData.rating.likes).length}}
     </button>
     <button
     :class="userRating == 'dislikes' && userRating !== 'likes' ? 'disliked' : 'warning'"
     @click="ratePost('dislikes')">
-    Dislike: {{Object.keys(postData.rating.dislikes).length}}
+      Dislike: {{Object.keys(postData.rating.dislikes).length}}
     </button>
   </div>
 </template>

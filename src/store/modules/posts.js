@@ -1,6 +1,8 @@
 import axios from "axios"
 import store from ".."
 import "../../axios/request.js";
+import { getPostData } from "../../use/getData";
+import { statusColor, ratingColor, ratingTitle } from '../../utils/alertsUtil'
 
 export default {
   namespaced: true,
@@ -20,7 +22,6 @@ export default {
     },
     setRating(state, payload) {
       const idx = state.posts.findIndex(el => el.postId == payload.postId)
-      console.log(idx)
       if (state.posts[idx].rating == undefined) {
         state.posts[idx].rating = {}
       }
@@ -31,7 +32,6 @@ export default {
     },
     removeRating(state, payload) {
       const idx = state.posts.findIndex(el => el.postId == payload.postId)
-      console.log(idx)
       if (state.posts[idx].rating == undefined) {
         state.posts[idx].rating = {}
       }
@@ -72,8 +72,13 @@ export default {
       })
       payload.postId = response.data.name
       dispatch('addToAuthor', {...payload, token})
-
       commit('addPost', payload)
+      store.commit('users/addPostId', payload)
+      store.dispatch('alerts/newMessage', {
+        status: statusColor(response.status),
+        title: 'Post created',
+        text: payload.title
+      })
     },
 
     async addToAuthor(_,payload) {
@@ -82,7 +87,6 @@ export default {
     },
 
     async setRating({commit}, payload) {
-      console.log('start rating', payload)
       const token = store.getters['auth/token']
       const setRating = [{
         ratingHolder: `users/${store.getters['auth/userId']}/rating/${payload.rating}`,
@@ -98,11 +102,14 @@ export default {
       }
       commit('setRating', payload)
       store.commit('users/setRating', payload)
+      store.dispatch('alerts/newMessage', {
+        status: `Post ${ratingColor(payload.rating)}`,
+        title: ratingTitle(payload.rating),
+        text: getPostData(payload.postId).title
+      })
     },
 
     async deleteRating({commit}, payload) {
-      console.log(payload)
-      
       const token = store.getters['auth/token']
       const setRating = [{
         ratingHolder: `users/${store.getters['auth/userId']}/rating/${payload.rating}/${payload.postId}`,
@@ -112,12 +119,10 @@ export default {
         ratingHolder: `posts/${payload.postId}/rating/${payload.rating}/${payload.userId}`,
         source: payload.userId
       }]
-      console.log('setRating', setRating)
       for(const el of setRating) {
         const url = `${process.env.VUE_APP_BASE_URL}/postli/${el.ratingHolder}.json?auth=${token}`
         const response = await axios.delete(url, el.source)
       }
-
       commit('removeRating',payload)
       store.commit('users/removeRating', payload)
     }

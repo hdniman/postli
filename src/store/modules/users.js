@@ -13,6 +13,12 @@ export default {
       state.users = payload
       console.log('users loaded')
     },
+    addPostId(state, payload) {
+      const index = state.users.findIndex(el => el.userId == payload.authorId)
+      console.log('1', state.users[index].postsId)
+      state.users[index].postsId[payload.postId] = ""
+      console.log('2', state.users[index].postsId)
+    },
     addUser(state, payload) {
       state.users.push(payload)
     },
