@@ -1,7 +1,8 @@
 <template>
   <div class="card">
-    <div v-if="canEdit" class="settingsButton">
-      <router-link class="toSettings" to="/profile">Settings</router-link>
+    <div class="settingsButton">
+      <router-link v-if="canEdit" to="/profile">settings</router-link>
+      <a v-else @click="$router.go(-1)">back</a>
     </div>
     <div class="header">
       <img class="image" :src="userData.photo"/>
@@ -13,8 +14,10 @@
       </div>
     <div>
       <h1>About:</h1>
-      {{userData.postsId}}
-      <article>
+      <article v-if="canEdit && userData.about == ''">
+        <router-link to="/profile">Add Info</router-link>
+      </article>
+      <article v-else>
         {{userData.about}}
       </article>
     </div>
@@ -46,6 +49,7 @@ export default {
 
     const userId = computed(() => route.params.userId)
     const refresh = () => {userData.value = getUserData(userId.value, 'userId')}
+    console.log('test', getUserData(userId.value, 'userId'))
     refresh()
     const userRoute = computed(() => route.params)
     watch(userRoute, ( to) => {
@@ -65,20 +69,19 @@ export default {
 
     const likes = computed(() => {
       const count = ref(0)
-      Object.keys(userData.value.postsId).forEach(element => {
         try {
-          count.value += Object.keys(getPostData(element).rating.likes).length
+          Object.keys(userData.value.postsId).forEach(element => {
+          count.value += Object.keys(getPostData(element).rating.likes).length})
         } catch (error) {}
-      });
       return count
     })
     const dislikes = computed(() => {
       const count = ref(0)
-      Object.keys(userData.value.postsId).forEach(element => {
         try {
+          Object.keys(userData.value.postsId).forEach(element => {
           count.value += Object.keys(getPostData(element).rating.dislikes).length
+        });
         } catch (error) {}
-      });
       return count
     })
     return {

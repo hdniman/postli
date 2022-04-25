@@ -1,10 +1,9 @@
 <template>
-{{myData}}
   <form class="card" @submit.prevent="changeUser.onSubmit">
     <h1>Personal info</h1>
     <img class="image" :src="myData.photo">
     <div class="form-control">
-      <label label for="photo">Photo</label>
+      <label class="hint-open" label for="photo">Photo</label><small class="hint"> Hint: Enter photo URL</small>
       <input id="photo" type="text" v-model="changeUser.photo">
     </div>
     <div class="form-control">
@@ -58,6 +57,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.hint {
+  display: none;
+}
 
+.hint-open:hover + .hint {
+  display: inline;
+}
 </style>

@@ -32,6 +32,7 @@ export default {
     },
     removeRating(state, payload) {
       const idx = state.posts.findIndex(el => el.postId == payload.postId)
+      console.log('state.posts[idx]', state.posts[idx])
       if (state.posts[idx].rating == undefined) {
         state.posts[idx].rating = {}
       }
@@ -39,6 +40,10 @@ export default {
         state.posts[idx].rating[payload.rating] = {}
       }
       delete state.posts[idx].rating[payload.rating][payload.userId]
+    },
+    deletePost(state, payload) {
+      const idx = state.posts.findIndex(el => el.postId == payload)
+      state.posts.splice(idx, 1)
     }
   },
   actions: {
@@ -125,6 +130,20 @@ export default {
       }
       commit('removeRating',payload)
       store.commit('users/removeRating', payload)
+    },
+    async deletePost({commit, dispatch}, payload) {
+      const token = store.getters['auth/token']
+      const url = `${process.env.VUE_APP_BASE_URL}/postli/posts/${payload.postId}.json?auth=${token}`
+      const ratingData = getPostData(payload.postId).rating
+      Object.keys(ratingData).forEach(rating => {
+        Object.keys(ratingData[rating]).forEach(async userId => {
+          store.dispatch('users/deleteUserRating', {rating: rating, postId: payload.postId, userId: userId})
+        })
+      })
+
+      const response = await axios.delete(url)
+      await store.dispatch('users/deletePostId', payload)
+      commit('deletePost', payload.postId)
     }
   },
   getters: {

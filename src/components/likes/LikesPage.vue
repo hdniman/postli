@@ -4,13 +4,15 @@
       likes
     </h1>
     <rated-item v-for="ratedItem in ratingData" :key="ratedItem" :ratedItem="ratedItem"></rated-item>
-    <h3 v-if="ratingData.length == 0">You haven't liked anything yet!</h3>
+    <div v-if="ratingData.length == 0">
+      <h3>You haven't liked anything yet!</h3> <router-link to="/">GO LIKE!</router-link>
+    </div>
   </div>
 </template>
 
 <script>
 import RatedItem from "./RatedItem.vue";
-import { ref } from '@vue/reactivity'
+import { computed, ref } from '@vue/reactivity'
 import { useStore } from 'vuex'
 export default {
   setup() {
@@ -27,7 +29,7 @@ export default {
       userData.value.rating.dislikes = {}
     }
     
-    const ratingData = ref(Object.keys(userData.value.rating.likes))
+    const ratingData = computed(() => Object.keys(userData.value.rating.likes))
 
 
     return {

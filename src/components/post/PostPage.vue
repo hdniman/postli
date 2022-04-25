@@ -1,31 +1,45 @@
 <template>
-  <div class="card">
-    <div class="split">
-      <router-link class="user-url" :to="`/user/${postData.authorId}`">
-        {{authorNickname}}
-      </router-link>
-      <a @click="back">back</a>
-    </div>
-    <div class="split">
-      <h2>{{postData.title}}</h2>
-      <h2>{{new Date(postData.time).toLocaleDateString()}}</h2>
-    </div>
-    <h3>Description: {{postData.description}}</h3>
-    <p>{{postData.articleBody}}</p>
-    <button
-    :class="userRating == 'likes' && userRating !== 'dislikes' ? 'primary' : ''"
-    @click="ratePost('likes')">
-      Like: {{Object.keys(postData.rating.likes).length}}
-    </button>
-    <button
-    :class="userRating == 'dislikes' && userRating !== 'likes' ? 'disliked' : 'warning'"
-    @click="ratePost('dislikes')">
-      Dislike: {{Object.keys(postData.rating.dislikes).length}}
-    </button>
+  <div>
+   <div class="card">
+     <div class="split">
+       <router-link class="user-url" :to="`/user/${postData.authorId}`">
+         {{authorNickname}}
+       </router-link>
+       <a @click="back">back</a>
+     </div>
+     <div class="split">
+       <h2>{{postData.title}}</h2>
+       <h2>{{new Date(postData.time).toLocaleDateString()}}</h2>
+     </div>
+     <h3>Description: {{postData.description}}</h3>
+     <p>{{postData.articleBody}}</p>
+     <button
+     :class="userRating == 'likes' && userRating !== 'dislikes' ? 'primary' : ''"
+     @click="ratePost('likes')">
+       Like: {{Object.keys(postData.rating.likes).length}}
+     </button>
+     <button
+     style="margin-left: 10px;"
+     :class="userRating == 'dislikes' && userRating !== 'likes' ? 'disliked' : 'warning'"
+     @click="ratePost('dislikes')">
+       Dislike: {{Object.keys(postData.rating.dislikes).length}}
+     </button>
+     <button
+     class="danger deleteButton"
+     v-if="userId == postData.authorId"
+     @click="deleteRequest">Delete</button>
+   </div>
+   <confirm-modal
+   v-if="modal"
+   @confirm="deletePost"
+   @reject="deleteRequest">
+    Do you want to delete "{{postData.title}}"?
+   </confirm-modal>
   </div>
 </template>
 
 <script>
+import ConfirmModal from "../ui/ConfirmModal.vue";
 import { computed, ref } from '@vue/reactivity'
 import { useRoute, useRouter } from 'vue-router'
 import { getPostData, getUserData } from '../../use/getData'
@@ -78,8 +92,15 @@ export default {
         router.push('/auth')
       }
     }
-    
     const back = () => {router.go(-1)}
+
+    const modal = ref(false)
+    const deleteRequest = () => modal.value = !modal.value
+    const deletePost = async () => {
+      deleteRequest()
+      await store.dispatch('posts/deletePost', {postId: postData.value.postId, userId: userId.value})
+      router.go(-1)
+    }
     
     return {
       postData,
@@ -88,8 +109,15 @@ export default {
       userRating,
       userData,
       auth,
-      back
+      back,
+      userId,
+      modal,
+      deleteRequest,
+      deletePost
     }
+  },
+  components: {
+    ConfirmModal
   }
 
 }
@@ -103,4 +131,13 @@ export default {
   border-color: #721b20;
 }
 
+.deleteButton {
+  float: right;
+}
+
+@media screen and (max-width: 400px) {
+  .deleteButton {
+    display: none;
+  }
+}
 </style>

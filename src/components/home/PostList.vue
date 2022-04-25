@@ -1,5 +1,5 @@
 <template>
-<h1>posts</h1>
+<h1>Welcome to PostLi!</h1>
   <post
   v-for="post in posts"
   :key="post.postId"
@@ -28,6 +28,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+h1 {
+  text-align: center;
+  color: #1a4761;
+  font-family: Roboto;
+  font-style: italic;
+}
 </style>

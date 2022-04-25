@@ -6,7 +6,7 @@
     <async></async>
   </template>
   <template #fallback>
-    <h1>Loading...</h1>
+    <div class="loader">Loading...</div>
   </template>
 </suspense>
 
